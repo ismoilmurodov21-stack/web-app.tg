@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💎 Купить Алмазы - MURODOV</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <style>
+        /* ========================================
+           CSS VARIABLES & RESET
+           ======================================== */
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(30, 30, 60, 0.6);
+            --bg-card-hover: rgba(40, 40, 80, 0.8);
+            --primary: #00d4ff;
+            --primary-glow: #00d4ff;
+            --secondary: #ff00ff;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4757;
+            --text: #ffffff;
+            --text-secondary: #8892b0;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse at top, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a1a 0%, #0f0f2a 100%);
+        }
+
+        /* ========================================
+           SCROLLBAR
+           ======================================== */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
+        /* ========================================
+           APP CONTAINER
+           ======================================== */
+        .app {
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* ========================================
+           PACKAGES GRID
+           ======================================== */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 350px) {
+            .packages-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========================================
+           PACKAGE CARD (GLASSMORPHISM)
+           ======================================== */
+        .package-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .package-card:hover::before {
+            left: 100%;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2), 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .package-card:active {
+            transform: scale(0.98);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, var(--warning), #ff7700);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .package-hot-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--danger), #ff6b6b);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            animation: hotPulse 1.5s infinite;
+        }
+
+        @keyframes hotPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 71, 87, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 71, 87, 0.8); }
+        }
+
+        .package-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .package-diamonds {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .package-diamonds span {
+            color: var(--primary);
+        }
+
+        .package-bonus {
+            font-size: 12px;
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+
+        .package-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .package-price-value {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, var(--primary), #0099cc);
+            border: none;
+            color: #000;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* ========================================
+           MODAL
+           ======================================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(180deg, rgba(20, 20, 40, 0.98) 0%, rgba(10, 10, 30, 0.98) 100%);
+            border: 1px solid var(--primary);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--text);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           FILE UPLOAD (SCREENSHOT)
+           ======================================== */
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--glass);
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .file-upload.has-file {
+            border-style: solid;
+            border-color: var(--success);
+            padding: 10px;
+        }
+
+        .file-upload-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .file-upload-text {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .file-upload-preview {
+            display: none;
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .file-upload.has-file .file-upload-icon,
+        .file-upload.has-file .file-upload-text {
+            display: none;
+        }
+
+        .file-upload.has-file .file-upload-preview {
+            display: block;
+        }
+
+        /* ========================================
+           PAYMENT INFO
+           ======================================== */
+        .payment-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .payment-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .payment-icon {
+            font-size: 28px;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .payment-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .payment-warning {
+            font-size: 11px;
+            color: var(--warning);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* ========================================
+           SUBMIT BUTTON
+           ======================================== */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), #0099cc);
+            border: none;
+            border-radius: 14px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            margin: -12px 0 0 -12px;
+            border: 3px solid rgba(0, 0, 0, 0.3);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========================================
+           ORDERS LIST
+           ======================================== */
+        .orders-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .order-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .order-resend-btn {
+            background: linear-gradient(135deg, var(--primary), #0099cc);
+            border: none;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        .order-resend-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+        }
+
+        .order-resend-btn:active {
+            transform: scale(0.98);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .order-diamonds {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .order-status.pending { background: rgba(255, 170, 0, 0.2); color: var(--warning); }
+        .order-status.accepted { background: rgba(0, 255, 136, 0.2); color: var(--success); }
+        .order-status.rejected { background: rgba(255, 71, 87, 0.2); color: var(--danger); }
+
+        .order-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .order-image {
+            margin-top: 12px;
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           ADMIN PANEL
+           ======================================== */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-dark);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+            opacity: 1;
+            visibility: visible;
+            transition: none !important;
+            animation: none !important;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .admin-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        .admin-close {
+            background: var(--danger);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 400px) {
+            .admin-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .admin-stat {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .admin-stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .admin-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .admin-orders {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-order {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .admin-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .admin-order-id {
+            font-weight: 600;
+        }
+
+        .admin-order-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .admin-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-btn.accept { background: var(--success); color: #000; }
+        .admin-btn.reject { background: var(--danger); color: white; }
+        .admin-btn:hover { transform: scale(1.05); }
+
+        .admin-order-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .admin-order-image {
+            margin-top: 12px;
+            border-radius: 10px;
+            max-width: 150px;
+            max-height: 100px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        /* ========================================
+           TOAST
+           ======================================== */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            padding: 20px 40px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 3000;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            to { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+
+        /* ========================================
+           CONFETTI
+           ======================================== */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 4000;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ========================================
+           ADMIN MINI BUTTON
+           ======================================== */
+        .admin-mini-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-mini-btn:hover {
+            background: var(--primary);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* Password Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .password-modal.active {
+            display: flex;
+        }
+
+        .password-box {
+            background: linear-gradient(180deg, rgba(20, 20, 40, 0.98) 0%, rgba(10, 10, 30, 0.98) 100%);
+            border: 1px solid var(--danger);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .password-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 20px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--danger);
+        }
+
+        .password-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--danger);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .password-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        .password-cancel {
+            margin-top: 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        .password-error {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-error.show {
+            display: block;
+        }
+
+        /* ========================================
+           HERO BANNER (MARKETING)
+           ======================================== */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(255, 0, 255, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 24px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: heroFadeIn 0.6s ease;
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--danger), #ff6b6b);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--warning);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-num {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 50%);
+            animation: glowRotate 10s linear infinite;
+        }
+
+        @keyframes glowRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========================================
+           FEATURES ROW
+           ======================================== */
+        .features-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .feature-item {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           PROMO BANNER
+           ======================================== */
+        .promo-banner {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.2), rgba(255, 71, 87, 0.2));
+            border: 2px dashed var(--warning);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            animation: promoPulse 3s infinite;
+        }
+
+        @keyframes promoPulse {
+            0%, 100% { border-color: var(--warning); }
+            50% { border-color: var(--danger); }
+        }
+
+        .promo-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .promo-icon {
+            font-size: 32px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .promo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .promo-text strong {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        /* ========================================
+           HEADER (OLD - HIDDEN)
+           ======================================== */
+        .header {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-content">
+                <div class="hero-badge">🔥 АКЦИЯ</div>
+                <h1 class="hero-title">💎 АЛМАЗЫ ДЛЯ FREE FIRE</h1>
+                <p class="hero-subtitle">Купи алмазы со скидкой до 50%!</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">10K+</span>
+                        <span class="hero-stat-label">Клиентов</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">99%</span>
+                        <span class="hero-stat-label">Отзывов</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">5★</span>
+                        <span class="hero-stat-label">Рейтинг</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-glow"></div>
+        </div>
+
+        <!-- Features -->
+        <div class="features-row">
+            <div class="feature-item">✅ Мгновенная доставка</div>
+            <div class="feature-item">🛡️ Гарантия</div>
+            <div class="feature-item">💰 Лучшие цены</div>
+        </div>
+
+        <!-- Packages Grid -->
+        <div class="packages-grid" id="packages-grid"></div>
+
+        <!-- Promo Banner -->
+        <div class="promo-banner">
+            <div class="promo-content">
+                <span class="promo-icon">🎁</span>
+                <div class="promo-text">
+                    <strong>БОНУС +80%</strong> к каждому пакету!
+                </div>
+            </div>
+        </div>
+
+        <!-- My Orders -->
+        <div class="orders-section">
+            <div class="section-title">📋 Мои заявки</div>
+            <div class="orders-list" id="orders-list"></div>
+        </div>
+
+        <!-- Admin Button (Small) -->
+        <button class="admin-mini-btn" onclick="openAdminWithPassword()">⚙️</button>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">💎 Оформление заявки</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+
+            <form id="order-form" onsubmit="submitOrder(event)">
+                <!-- Player ID -->
+                <div class="form-group">
+                    <label class="form-label">🎮 ID игрока</label>
+                    <input type="text" class="form-input" id="player-id" placeholder="Введите ID" required>
+                </div>
+
+                <!-- Nickname -->
+                <div class="form-group">
+                    <label class="form-label">👤 Ник игрока</label>
+                    <input type="text" class="form-input" id="player-nickname" placeholder="Введите ник" required>
+                </div>
+
+                <!-- Selected Package (Hidden) -->
+                <input type="hidden" id="selected-package-id">
+
+                <!-- Screenshot Upload -->
+                <div class="form-group">
+                    <label class="form-label">📸 Чек об оплате (фото)</label>
+                    <div class="file-upload" id="file-upload" onclick="document.getElementById('screenshot-input').click()">
+                        <input type="file" id="screenshot-input" accept="image/*" hidden onchange="handleFileUpload(event)">
+                        <div class="file-upload-icon">📷</div>
+                        <div class="file-upload-text">Нажмите для загрузки чека<br>из галереи</div>
+                        <img class="file-upload-preview" id="file-preview" src="" alt="Чек">
+                    </div>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="payment-box">
+                    <div class="payment-title">💳 Реквизиты для оплаты</div>
+                    <div class="payment-method">
+                        <span class="payment-icon">📱</span>
+                        <div class="payment-details">
+                            <div class="payment-name">Alif Mobi</div>
+                            <div class="payment-number">+992 985 387 883</div>
+                        </div>
+                    </div>
+                    <div class="payment-warning">⚠️ Покупайте алмазы только у MURODOV!</div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    📤 ОТПРАВИТЬ ЗАЯВКУ
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="password-modal">
+        <div class="password-box">
+            <div class="password-title">🔐 ВХОД В АДМИН</div>
+            <input type="password" class="password-input" id="admin-password" placeholder="Введите пароль">
+            <button class="password-btn" onclick="checkAdminPassword()">ВОЙТИ</button>
+            <button class="password-btn password-cancel" onclick="closePasswordModal()">ОТМЕНА</button>
+            <div class="password-error" id="password-error">❌ Неверный пароль!</div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-header">
+            <h2 class="admin-title">🔐 ПАНЕЛЬ АДМИНА</h2>
+            <button class="admin-close" onclick="closeAdmin()">✕ Закрыть</button>
+        </div>
+
+        <div class="admin-stats">
+            <div class="admin-stat">
+                <div class="admin-stat-value" id="stat-total">0</div>
+                <div class="admin-stat-label">Всего</div>
+            </div>
+            <div class="admin-stat">
+                <div class="admin-stat-value" id="stat-pending">0</div>
+                <div class="admin-stat-label">Ожидание</div>
+            </div>
+            <div class="admin-stat">
+                <div class="admin-stat-value" id="stat-accepted">0</div>
+                <div class="admin-stat-label">Принято</div>
+            </div>
+            <div class="admin-stat">
+                <div class="admin-stat-value" id="stat-rejected">0</div>
+                <div class="admin-stat-label">Отклонено</div>
+            </div>
+        </div>
+
+        <div class="section-title">📋 Все заявки</div>
+        <div class="admin-orders" id="admin-orders"></div>
+    </div>
+
+    <script>
+        // ========================================
+        // CONFIG
+        // ========================================
+        const CONFIG = {
+            PAYMENT_NUMBER: '+992 985 387 883',
+            STORAGE_KEY: 'diamond_shop_orders'
+        };
+
+        // Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // ========================================
+        // PACKAGES DATA
+        // ========================================
+        const PACKAGES = [
+            { id: 1, diamonds: 100, bonus: 80, price: 10, cm: 'CM', name: '100', isHot: false },
+            { id: 2, diamonds: 310, bonus: 249, price: 30, cm: 'CM', name: '310', isHot: false },
+            { id: 3, diamonds: 520, bonus: 416, price: 50, cm: 'CM', name: '520', isHot: false },
+            { id: 4, diamonds: 1060, bonus: 848, price: 100, cm: 'CM', name: '1060', isHot: true },
+            { id: 5, diamonds: 2180, bonus: 1853, price: 200, cm: 'CM', name: '2180', isHot: true },
+            { id: 6, diamonds: 5600, bonus: 4760, price: 500, cm: 'CM', name: '5600', isHot: true },
+            { id: 7, diamonds: 800, bonus: 0, price: 35, cm: 'CM', name: 'ПРОПУСК', isVoucher: false },
+            { id: 8, diamonds: 450, bonus: 0, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true },
+            { id: 9, diamonds: 2500, bonus: 0, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true }
+        ];
+
+        // ========================================
+        // STATE
+        // ========================================
+        let orders = [];
+        let currentPackage = null;
+        let screenshotData = null;
+
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        function init() {
+            loadOrders();
+            renderPackages();
+            renderOrders();
+            updateAdminStats();
+            applyTheme();
+            setupKeyboardShortcuts();
+        }
+
+        function loadOrders() {
+            const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+            orders = saved ? JSON.parse(saved) : [];
+        }
+
+        function saveOrders() {
+            localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(orders));
+        }
+
+        function applyTheme() {
+            const params = tg.themeParams;
+            if (params) {
+                document.documentElement.style.setProperty('--bg-dark', params.bg_color || '#0a0a1a');
+                document.documentElement.style.setProperty('--text', params.text_color || '#ffffff');
+            }
+        }
+
+        // ========================================
+        // KEYBOARD SHORTCUTS (ADMIN)
+        // ========================================
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.altKey && e.key === 'A') {
+                    e.preventDefault();
+                    openAdmin();
+                }
+            });
+        }
+
+        // ========================================
+        // PASSWORD MODAL
+        // ========================================
+        const ADMIN_PASSWORD = '2013142020'; // Пароль админа
+
+        function openAdminWithPassword() {
+            document.getElementById('password-modal').classList.add('active');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('password-error').classList.remove('show');
+            document.getElementById('admin-password').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.remove('active');
+        }
+
+        function checkAdminPassword() {
+            const input = document.getElementById('admin-password').value;
+            const error = document.getElementById('password-error');
+            
+            if (input === ADMIN_PASSWORD) {
+                closePasswordModal();
+                openAdmin();
+                tg.HapticFeedback.notificationOccurred('success');
+            } else {
+                error.classList.add('show');
+                document.getElementById('admin-password').value = '';
+                tg.HapticFeedback.impactOccurred('heavy');
+            }
+        }
+
+        // Enter key for password
+        document.getElementById('admin-password')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                checkAdminPassword();
+            }
+        });
+
+        // ========================================
+        // RENDER PACKAGES
+        // ========================================
+        function renderPackages() {
+            const grid = document.getElementById('packages-grid');
+            grid.innerHTML = '';
+
+            PACKAGES.forEach((pkg, index) => {
+                const card = document.createElement('div');
+                card.className = 'package-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.onclick = () => openModal(pkg);
+
+                const bonusText = pkg.bonus > 0 ? `<div class="package-bonus">🎁 +${pkg.bonus} БОНУС (+80%)</div>` : '';
+                const badge = pkg.isVoucher ? '<div class="package-badge">🎫 ВАУЧЕР</div>' : '';
+                const hotBadge = pkg.isHot ? '<div class="package-hot-badge">🔥 ХИТ ПРОДАЖ</div>' : '';
+                
+                const totalGems = pkg.diamonds + (pkg.bonus || 0);
+
+                card.innerHTML = `
+                    ${hotBadge}
+                    ${badge}
+                    <div class="package-icon">💎</div>
+                    <div class="package-diamonds">${totalGems.toLocaleString()} АЛМАЗОВ</div>
+                    ${bonusText}
+                    <div class="package-price">
+                        <span class="package-price-value">${pkg.price} CM</span>
+                        <button class="buy-btn" onclick="event.stopPropagation(); openModal(PACKAGES[${index}])">КУПИТЬ</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // ========================================
+        // MODAL
+        // ========================================
+        function openModal(pkg) {
+            currentPackage = pkg;
+            screenshotData = null;
+
+            // Reset form
+            document.getElementById('order-form').reset();
+            document.getElementById('selected-package-id').value = pkg.id;
+            document.getElementById('file-upload').classList.remove('has-file');
+            document.getElementById('file-preview').src = '';
+
+            // Show modal
+            document.getElementById('modal-overlay').classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('active');
+            currentPackage = null;
+            screenshotData = null;
+        }
+
+        // ========================================
+        // FILE UPLOAD
+        // ========================================
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                screenshotData = event.target.result;
+                document.getElementById('file-preview').src = screenshotData;
+                document.getElementById('file-upload').classList.add('has-file');
+                tg.HapticFeedback.impactOccurred('light');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ========================================
+        // SUBMIT ORDER
+        // ========================================
+        function submitOrder(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            // Get form data
+            const playerId = document.getElementById('player-id').value.trim();
+            const nickname = document.getElementById('player-nickname').value.trim();
+
+            // Validate
+            if (!playerId || !nickname) {
+                showToast('Заполните все поля!');
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                tg.HapticFeedback.impactOccurred('heavy');
+                return;
+            }
+
+            if (!screenshotData) {
+                showToast('Загрузите чек об оплате!');
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                tg.HapticFeedback.impactOccurred('heavy');
+                return;
+            }
+
+            // Create order
+            const order = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+                packageId: currentPackage.id,
+                packageName: currentPackage.name,
+                diamonds: currentPackage.diamonds,
+                bonus: currentPackage.bonus,
+                price: currentPackage.price,
+                playerId: playerId,
+                nickname: nickname,
+                screenshot: screenshotData,
+                status: 'pending',
+                createdAt: Date.now(),
+                userId: tg.initDataUnsafe?.user?.id || 'unknown',
+                username: tg.initDataUnsafe?.user?.first_name || 'User'
+            };
+
+            // Save
+            orders.unshift(order);
+            saveOrders();
+
+            // Send to bot
+            sendToBot(order);
+
+            // Close modal
+            closeModal();
+
+            // Reset button
+            btn.classList.remove('loading');
+            btn.disabled = false;
+
+            // UI updates
+            renderOrders();
+            updateAdminStats();
+            showToast('✅ Заявка отправлена!');
+            tg.HapticFeedback.notificationOccurred('success');
+
+            // Confetti
+            createConfetti();
+        }
+
+        // ========================================
+        // SEND TO BOT
+        // ========================================
+        function sendToBot(order, isResend = false) {
+            const typeLabel = isResend ? '📤 ПОВТОРНАЯ ЗАЯВКА' : '💎 ПОКУПКА АЛМАЗОВ';
+            const totalGems = order.diamonds + (order.bonus || 0);
+            
+            const message = `
+${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 'ПОКУПКА АЛМАЗОВ'}*
+
+💎 *Алмазы:* ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💰 *Цена:* ${order.price} CM
+🎮 *ID:* \`${order.playerId}\`
+👤 *Ник:* ${order.nickname}
+👤 *Клиент:* ${order.username}
+🆔 *Telegram:* ${order.userId}
+⏰ *Время:* ${new Date(order.createdAt).toLocaleString('ru-RU')}
+            `.trim();
+
+            try {
+                tg.sendData(JSON.stringify({
+                    type: isResend ? 'resend_order' : 'diamond_purchase',
+                    order: order,
+                    message: message
+                }));
+                console.log('Order sent:', isResend ? 'resend' : 'new');
+            } catch (e) {
+                console.log('Bot send error:', e);
+                // Continue anyway - order is saved locally
+            }
+        }
+
+        // ========================================
+        // RENDER ORDERS (CLIENT)
+        // ========================================
+        function renderOrders() {
+            const list = document.getElementById('orders-list');
+
+            if (orders.length === 0) {
+                list.innerHTML = '<div class="empty-orders">У вас пока нет заявок</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+
+            orders.slice(0, 10).forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'order-card';
+
+                const statusText = order.status === 'pending' ? 'Ожидание' : 
+                                   order.status === 'accepted' ? 'Принято' : 'Отменено';
+
+                const totalDiamonds = order.diamonds + order.bonus;
+
+                card.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-diamonds">💎 ${totalDiamonds} алмазов</span>
+                        <span class="order-status ${order.status}">${statusText}</span>
+                    </div>
+                    <button class="order-resend-btn" onclick="resendOrder('${order.id}')">📤 Отправить</button>
+                    <div class="order-details">
+                        ID: ${order.playerId} | Ник: ${order.nickname}<br>
+                        Цена: ${order.price} CM | ${new Date(order.createdAt).toLocaleString('ru-RU')}
+                    </div>
+                    ${order.screenshot ? `<img class="order-image" src="${order.screenshot}" alt="Чек">` : ''}
+                `;
+
+                list.appendChild(card);
+            });
+        }
+
+        // ========================================
+        // ADMIN PANEL
+        // ========================================
+        function openAdmin() {
+            document.getElementById('admin-panel').classList.add('active');
+            updateAdminStats();
+            renderAdminOrders();
+        }
+
+        function closeAdmin() {
+            document.getElementById('admin-panel').classList.remove('active');
+        }
+
+        function updateAdminStats() {
+            const total = orders.length;
+            const pending = orders.filter(o => o.status === 'pending').length;
+            const accepted = orders.filter(o => o.status === 'accepted').length;
+            const rejected = orders.filter(o => o.status === 'rejected').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-accepted').textContent = accepted;
+            document.getElementById('stat-rejected').textContent = rejected;
+        }
+
+        function renderAdminOrders() {
+            const list = document.getElementById('admin-orders');
+
+            if (orders.length === 0) {
+                list.innerHTML = '<div class="empty-orders">Нет заявок</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+
+            orders.forEach(order => {
+                const item = document.createElement('div');
+                item.className = 'admin-order';
+
+                const totalDiamonds = order.diamonds + order.bonus;
+                const statusText = order.status === 'pending' ? 'Ожидание' : 
+                                   order.status === 'accepted' ? 'Принято' : 'Отменено';
+
+                item.innerHTML = `
+                    <div class="admin-order-header">
+                        <div>
+                            <div class="admin-order-id">💎 ${totalDiamonds} алмазов - ${order.price} CM</div>
+                            <span class="order-status ${order.status}">${statusText}</span>
+                        </div>
+                        ${order.status === 'pending' ? `
+                        <div class="admin-order-actions">
+                            <button class="admin-btn accept" onclick="updateOrderStatus('${order.id}', 'accepted')">✓ Принять</button>
+                            <button class="admin-btn reject" onclick="updateOrderStatus('${order.id}', 'rejected')">✕ Отменить</button>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="admin-order-info">
+                        🎮 ID: <strong>${order.playerId}</strong> <button class="copy-btn" onclick="copyText('${order.playerId}')">📋</button><br>
+                        👤 Ник: ${order.nickname} <button class="copy-btn" onclick="copyText('${order.nickname}')">📋</button><br>
+                        👤 Клиент: ${order.username}<br>
+                        📅 ${new Date(order.createdAt).toLocaleString('ru-RU')}
+                    </div>
+                    ${order.screenshot ? `<img class="admin-order-image" src="${order.screenshot}" alt="Чек" onclick="viewImage('${order.screenshot}')">` : ''}
+                `;
+
+                list.appendChild(item);
+            });
+        }
+
+        function updateOrderStatus(orderId, status) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = status;
+                saveOrders();
+                renderOrders();
+                renderAdminOrders();
+                updateAdminStats();
+                showToast(status === 'accepted' ? '✅ Заявка принята!' : '❌ Заявка отменена');
+                tg.HapticFeedback.notificationOccurred('success');
+            }
+        }
+
+        function viewImage(src) {
+            const win = window.open('', '_blank');
+            win.document.write(`<img src="${src}" style="max-width:100%">`);
+        }
+
+        // ========================================
+        // COPY TO CLIPBOARD
+        // ========================================
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Скопировано: ' + text);
+                tg.HapticFeedback.notificationOccurred('success');
+            }).catch(() => {
+                showToast('❌ Ошибка копирования');
+            });
+        }
+
+        // ========================================
+        // RESEND ORDER
+        // ========================================
+        function resendOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) {
+                showToast('❌ Заявка не найдена');
+                return;
+            }
+
+            try {
+                // Send to bot as resend
+                sendToBot(order, true);
+                showToast('📤 Заявка отправлена повторно!');
+                tg.HapticFeedback.notificationOccurred('success');
+            } catch (error) {
+                console.error('Resend error:', error);
+                showToast('❌ Ошибка отправки');
+                tg.HapticFeedback.impactOccurred('heavy');
+            }
+        }
+
+        // ========================================
+        // UTILS
+        // ========================================
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        function createConfetti() {
+            const colors = ['#00d4ff', '#ff00ff', '#00ff88', '#ffaa00', '#ff4757'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') closeModal();
+        });
+
+        // Close password modal on overlay click
+        document.getElementById('password-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'password-modal') closePasswordModal();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
