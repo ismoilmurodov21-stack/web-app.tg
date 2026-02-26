@@ -57,6 +57,8 @@
         /* ========================================
            APP CONTAINER
            ======================================== */
+
+        
         .app {
             min-height: 100vh;
             padding: 20px;
@@ -159,7 +161,7 @@
             right: 12px;
             background: linear-gradient(135deg, var(--warning), #ff7700);
             color: #000;
-            font-size: 10px;
+            font-size: 16px;
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 20px;
@@ -800,6 +802,36 @@
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
 
+        .copy-bt {
+            width: 65%;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--primary), #8100cc);
+            border: none;
+            border-radius: 9px;
+            color: #000;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            width: 60%;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--primary), #8100cc);
+            border: none;
+            border-radius: 9px;
+            color: #000;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* ========================================
            ADMIN MINI BUTTON
            ======================================== */
@@ -1078,6 +1110,36 @@
             font-size: 18px;
         }
 
+        .murodov{
+            font-size: 20px;
+            color: rgb(255, 0, 0);
+        }
+
+        .v{
+            font-size: 18px;
+            color: #cc5c00;
+        }
+
+        .b{
+            font-size: 18px;
+            color: #cc5c00;
+        }
+
+        .icon{
+            font-size: 30px;
+        }
+
+        .hero-stat-nu{
+            color: yellow;
+        }
+
+        .hero-stat-nu {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            color: yellow;
+        }
+
         /* ========================================
            HEADER (OLD - HIDDEN)
            ======================================== */
@@ -1091,20 +1153,20 @@
         <!-- Hero Banner -->
         <div class="hero-banner">
             <div class="hero-content">
-                <div class="hero-badge">🔥 АКЦИЯ</div>
+                <div class="hero-badge">🔥 АКЦИЯ У MURODOV</div>
                 <h1 class="hero-title">💎 АЛМАЗЫ ДЛЯ FREE FIRE</h1>
-                <p class="hero-subtitle">Купи алмазы со скидкой до 50%!</p>
+                <p class="hero-subtitle">Купи алмазы со скидкой до 10%!</p>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <span class="hero-stat-num">10K+</span>
+                        <span class="hero-stat-num">999+</span>
                         <span class="hero-stat-label">Клиентов</span>
                     </div>
                     <div class="hero-stat">
-                        <span class="hero-stat-num">99%</span>
+                        <span class="hero-stat-num">80%</span>
                         <span class="hero-stat-label">Отзывов</span>
                     </div>
                     <div class="hero-stat">
-                        <span class="hero-stat-num">5★</span>
+                        <span class="hero-stat-nu">★ ★ ★ ★</span>
                         <span class="hero-stat-label">Рейтинг</span>
                     </div>
                 </div>
@@ -1125,7 +1187,7 @@
         <!-- Promo Banner -->
         <div class="promo-banner">
             <div class="promo-content">
-                <span class="promo-icon">🎁</span>
+                <span class="promo-icon">🎁😍</span>
                 <div class="promo-text">
                     <strong>БОНУС +80%</strong> к каждому пакету!
                 </div>
@@ -1166,6 +1228,22 @@
                 <!-- Selected Package (Hidden) -->
                 <input type="hidden" id="selected-package-id">
 
+
+
+                <!-- Payment Info -->
+                <div class="payment-box">
+                    <div class="payment-title">💳 Реквизиты для оплаты</div>
+                    <div class="payment-method">
+                        <span class="payment-icon">📱</span>
+                        <div class="payment-details">
+                            <div class="payment-name">Alif Mobi</div>
+                            <div class="payment-number">+992 985 38 78 83</div>
+                             <button class="copy-btn" onclick="copyText('+992985387883')">📋 Копировать</button><br>
+                        </div>
+                    </div>
+                    <div class="payment-warning"><b class="icon">⚠️</b><b class="b"> Покупайте алмазы только у <b class="murodov">MURODOV</b><b class="v"> !</b></b></div>
+                </div>
+
                 <!-- Screenshot Upload -->
                 <div class="form-group">
                     <label class="form-label">📸 Чек об оплате (фото)</label>
@@ -1175,19 +1253,6 @@
                         <div class="file-upload-text">Нажмите для загрузки чека<br>из галереи</div>
                         <img class="file-upload-preview" id="file-preview" src="" alt="Чек">
                     </div>
-                </div>
-
-                <!-- Payment Info -->
-                <div class="payment-box">
-                    <div class="payment-title">💳 Реквизиты для оплаты</div>
-                    <div class="payment-method">
-                        <span class="payment-icon">📱</span>
-                        <div class="payment-details">
-                            <div class="payment-name">Alif Mobi</div>
-                            <div class="payment-number">+992 985 387 883</div>
-                        </div>
-                    </div>
-                    <div class="payment-warning">⚠️ Покупайте алмазы только у MURODOV!</div>
                 </div>
 
                 <!-- Submit -->
@@ -1244,7 +1309,7 @@
         // CONFIG
         // ========================================
         const CONFIG = {
-            PAYMENT_NUMBER: '+992 985 387 883',
+            PAYMENT_NUMBER: '+992 985 38 78 83',
             STORAGE_KEY: 'diamond_shop_orders'
         };
 
@@ -1257,15 +1322,15 @@
         // PACKAGES DATA
         // ========================================
         const PACKAGES = [
-            { id: 1, diamonds: 100, bonus: 80, price: 10, cm: 'CM', name: '100', isHot: false },
-            { id: 2, diamonds: 310, bonus: 249, price: 30, cm: 'CM', name: '310', isHot: false },
-            { id: 3, diamonds: 520, bonus: 416, price: 50, cm: 'CM', name: '520', isHot: false },
-            { id: 4, diamonds: 1060, bonus: 848, price: 100, cm: 'CM', name: '1060', isHot: true },
-            { id: 5, diamonds: 2180, bonus: 1853, price: 200, cm: 'CM', name: '2180', isHot: true },
-            { id: 6, diamonds: 5600, bonus: 4760, price: 500, cm: 'CM', name: '5600', isHot: true },
-            { id: 7, diamonds: 800, bonus: 0, price: 35, cm: 'CM', name: 'ПРОПУСК', isVoucher: false },
-            { id: 8, diamonds: 450, bonus: 0, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true },
-            { id: 9, diamonds: 2500, bonus: 0, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true }
+            { id: 1, diamonds: 105, price: 10, cm: 'CM', name: '100', isHot: false },
+            { id: 2, diamonds: 310, price: 30, cm: 'CM', name: '310', isHot: false },
+            { id: 3, diamonds: 520, price: 50, cm: 'CM', name: '520', isHot: false },
+            { id: 4, diamonds: 1060, price: 100, cm: 'CM', name: '1060', isHot: true },
+            { id: 5, diamonds: 2180, price: 200, cm: 'CM', name: '2180', isHot: true },
+            { id: 6, diamonds: 5600, price: 500, cm: 'CM', name: '5600', isHot: true },
+            { id: 7, diamonds: 1000, price: 50, cm: 'CM', name: 'ПРОПУСК ПРОКАЧКА', isVoucher: false },
+            { id: 8, diamonds: 450, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true },
+            { id: 9, diamonds: 2500, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true }
         ];
 
         // ========================================
@@ -1560,9 +1625,7 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
                     <div class="order-header">
                         <span class="order-diamonds">💎 ${totalDiamonds} алмазов</span>
                         <span class="order-status ${order.status}">${statusText}</span>
-                    </div>
-                    <button class="order-resend-btn" onclick="resendOrder('${order.id}')">📤 Отправить</button>
-                    <div class="order-details">
+
                         ID: ${order.playerId} | Ник: ${order.nickname}<br>
                         Цена: ${order.price} CM | ${new Date(order.createdAt).toLocaleString('ru-RU')}
                     </div>
@@ -1630,8 +1693,8 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
                         ` : ''}
                     </div>
                     <div class="admin-order-info">
-                        🎮 ID: <strong>${order.playerId}</strong> <button class="copy-btn" onclick="copyText('${order.playerId}')">📋</button><br>
-                        👤 Ник: ${order.nickname} <button class="copy-btn" onclick="copyText('${order.nickname}')">📋</button><br>
+                        🎮 ID: <strong>${order.playerId}</strong> <button class="copy-bt" onclick="copyText('${order.playerId}')">📋 Копировать</button><br>
+                        👤 Ник: ${order.nickname}<br>
                         👤 Клиент: ${order.username}<br>
                         📅 ${new Date(order.createdAt).toLocaleString('ru-RU')}
                     </div>
@@ -1665,7 +1728,7 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
         // ========================================
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Скопировано: ' + text);
+                showToast('📋 Скопировано');
                 tg.HapticFeedback.notificationOccurred('success');
             }).catch(() => {
                 showToast('❌ Ошибка копирования');
