@@ -1310,7 +1310,11 @@
         // ========================================
         const CONFIG = {
             PAYMENT_NUMBER: '+992 985 38 78 83',
-            STORAGE_KEY: 'diamond_shop_orders'
+            STORAGE_KEY: 'diamond_shop_orders',
+            // === НАСТРОЙКИ ДЛЯ УВЕДОМЛЕНИЙ АДМИНА ===
+            TELEGRAM_BOT_TOKEN: '8611860872:AAGWM2vCR9DDnQF_T3smwJDqv81wgqdwww8', // Токен бота @BotFather
+            ADMIN_CHAT_IDS: '8406121228' // ID админов через запятую
+            // ======================================
         };
 
         // Telegram WebApp
@@ -1547,6 +1551,9 @@
             orders.unshift(order);
             saveOrders();
 
+            // Отправка уведомлений ВСЕМ админам
+            notifyAdmins(order, false);
+
             // Send to bot
             sendToBot(order);
 
@@ -1596,6 +1603,56 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
             } catch (e) {
                 console.log('Bot send error:', e);
                 // Continue anyway - order is saved locally
+            }
+        }
+
+        // ========================================
+        // ОТПРАВКА УВЕДОМЛЕНИЙ ВСЕМ АДМИНАМ
+        // ========================================
+        async function notifyAdmins(order, isResend = false) {
+            const botToken = CONFIG.TELEGRAM_BOT_TOKEN;
+            const adminIds = CONFIG.ADMIN_CHAT_IDS;
+            
+            // Проверка настройки
+            if (!botToken || botToken === 'YOUR_BOT_TOKEN_HERE' || 
+                !adminIds || adminIds === 'YOUR_CHAT_ID,YOUR_CHAT_ID2') {
+                console.log('Telegram уведомления не настроены. Настройте TELEGRAM_BOT_TOKEN и ADMIN_CHAT_IDS в CONFIG');
+                return;
+            }
+
+            const totalGems = order.diamonds + (order.bonus || 0);
+            const message = `
+${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '💎 НОВАЯ ЗАЯВКА'}*
+
+💎 *Алмазы:* ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💰 *Цена:* ${order.price} CM
+🎮 *ID:* \`${order.playerId}\`
+👤 *Ник:* ${order.nickname}
+👤 *Клиент:* ${order.username}
+🆔 *Telegram ID:* ${order.userId}
+📱 *Номер:* ${CONFIG.PAYMENT_NUMBER}
+⏰ *Время:* ${new Date(order.createdAt).toLocaleString('ru-RU')}
+            `.trim();
+            
+            // Получаем список админов
+            const adminList = adminIds.split(',').map(id => id.trim()).filter(id => id);
+            
+            // Отправляем каждому админу
+            for (const chatId of adminList) {
+                try {
+                    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                    console.log(`Уведомление отправлено админу: ${chatId}`);
+                } catch (error) {
+                    console.error(`Ошибка отправки админу ${chatId}:`, error);
+                }
             }
         }
 
@@ -1799,3 +1856,4 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
     </script>
 </body>
 </html>
+
