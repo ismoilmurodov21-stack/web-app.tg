@@ -1622,7 +1622,9 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
             }
 
             const totalGems = order.diamonds + (order.bonus || 0);
-            const message = `
+            
+            // Текст сообщения
+            const messageText = `
 ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '💎 НОВАЯ ЗАЯВКА'}*
 
 💎 *Алмазы:* ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
@@ -1644,74 +1646,91 @@ ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
             // Отправляем каждому админу
             for (const chatId of adminList) {
                 try {
-                    // Сначала отправляем текст
-                    const url = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendMessage`);
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            chat_id: chatId,
-                            text: message,
-                            parse_mode: 'Markdown'
-                        })
-                    });
-                    
-                    const result = await response.json();
-                    if (result.ok) {
-                        console.log(`✅ Текст админу ${chatId} отправлен!`);
-                        
-                        // Теперь отправляем фото чека если есть
-                        if (order.screenshot && order.screenshot.startsWith('data:image')) {
-                            try {
-                                // Конвертируем base64 в blob
-                                const base64Data = order.screenshot.split(',')[1];
-                                const byteCharacters = atob(base64Data);
-                                const byteNumbers = new Array(byteCharacters.length);
-                                for (let i = 0; i < byteCharacters.length; i++) {
-                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                                }
-                                const byteArray = new Uint8Array(byteNumbers);
-                                const blob = new Blob([byteArray], {type: 'image/jpeg'});
-                                
-                                // Создаем FormData
-                                const formData = new FormData();
-                                formData.append('chat_id', chatId);
-                                formData.append('photo', blob, 'receipt.jpg');
-                                formData.append('caption', '📸 Чек об оплате от ' + order.nickname);
-                                
-                                // Отправляем через CORS прокси
-                                const photoUrl = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendPhoto`);
-                                
-                                const photoResponse = await fetch(photoUrl, {
-                                    method: 'POST',
-                                    body: formData
-                                });
-                                
-                                const photoResult = await photoResponse.json();
-                                if (photoResult.ok) {
-                                    console.log('✅ Фото отправлено!');
-                                    showToast('📨 Админ уведомлён с фото!');
-                                } else {
-                                    console.log('Фото не отправлено:', photoResult.description);
-                                    showToast('📨 Текст отправлен, фото не доставлено');
-                                }
-                            } catch (photoError) {
-                                console.log('Ошибка отправки фото:', photoError);
+                    // Если есть скриншот - отправляем фото с caption
+                    if (order.screenshot && order.screenshot.startsWith('data:image')) {
+                        try {
+                            // Конвертируем base64 в blob
+                            const base64Data = order.screenshot.split(',')[1];
+                            const byteCharacters = atob(base64Data);
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
                             }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], {type: 'image/jpeg'});
+                            
+                            // Формируем caption с данными заказа
+                            const captionText = `
+${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '💎 НОВАЯ ЗАЯВКА'}
+
+💎 Алмазы: ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💰 Цена: ${order.price} CM
+🎮 ID: \`${order.playerId}\`
+👤 Ник: ${order.nickname}
+👤 Клиент:* ${order.username}
+🆔 *Telegram ID:* ${order.userId}
+📱 Номер: ${CONFIG.PAYMENT_NUMBER}
+⏰ Время: ${new Date(order.createdAt).toLocaleString('ru-RU')}
+                            `.trim();
+                            
+                            // Создаем FormData
+                            const formData = new FormData();
+                            formData.append('chat_id', chatId);
+                            formData.append('photo', blob, 'receipt.jpg');
+                            formData.append('caption', captionText);
+                            
+                            // Отправляем через CORS прокси
+                            const photoUrl = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendPhoto`);
+                            
+                            const photoResponse = await fetch(photoUrl, {
+                                method: 'POST',
+                                body: formData
+                            });
+                            
+                            const photoResult = await photoResponse.json();
+                            if (photoResult.ok) {
+                                console.log('✅ Фото с данными отправлено!');
+                                showToast('📨 Админ уведомлён!');
+                            } else {
+                                console.log('Фото не отправлено:', photoResult.description);
+                                // Отправляем только текст если фото не дошло
+                                await sendTextMessage(botToken, chatId, messageText, corsProxy);
+                            }
+                        } catch (photoError) {
+                            console.log('Ошибка фото, отправляем текст:', photoError);
+                            await sendTextMessage(botToken, chatId, messageText, corsProxy);
                         }
-                        
-                        showToast('📨 Админ уведомлён!');
                     } else {
-                        console.error(`Ошибка: ${result.description}`);
+                        // Нет скриншота - отправляем только текст
+                        await sendTextMessage(botToken, chatId, messageText, corsProxy);
                     }
                 } catch (error) {
                     console.error(`Ошибка:`, error);
                     showToast('📋 Заявка сохранена (админ офлайн)');
                 }
             }
+        }
+
+        // Функция отправки текстового сообщения
+        async function sendTextMessage(botToken, chatId, text, corsProxy) {
+            const url = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendMessage`);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: text,
+                    parse_mode: 'Markdown'
+                })
+            });
+            const result = await response.json();
+            if (result.ok) {
+                showToast('📨 Админ уведомлён!');
+            }
+            return result;
         }
 
         // ========================================
@@ -1914,3 +1933,4 @@ ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
     </script>
 </body>
 </html>
+
