@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>💎 Купить Алмазы - KILLUA</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <style>
+    <style>
         /* ========================================
            CSS VARIABLES & RESET
            ======================================== */
@@ -57,8 +57,6 @@
         /* ========================================
            APP CONTAINER
            ======================================== */
-
-        
         .app {
             min-height: 100vh;
             padding: 20px;
@@ -201,12 +199,6 @@
 
         .package-diamonds span {
             color: var(--primary);
-        }
-
-        .package-bonus {
-            font-size: 12px;
-            color: var(--success);
-            margin-bottom: 12px;
         }
 
         .package-price {
@@ -539,44 +531,6 @@
             position: relative;
         }
 
-        .order-resend-btn {
-            background: linear-gradient(135deg, var(--primary), #0099cc);
-            border: none;
-            color: #000;
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
-            pointer-events: auto;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            margin-bottom: 12px;
-            width: 100%;
-        }
-
-        .order-resend-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
-        }
-
-        .order-resend-btn:active {
-            transform: scale(0.98);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
         .order-header {
             display: flex;
             justify-content: space-between;
@@ -635,10 +589,6 @@
             z-index: 2000;
             overflow-y: auto;
             padding: 20px;
-            opacity: 1;
-            visibility: visible;
-            transition: none !important;
-            animation: none !important;
         }
 
         .admin-panel.active {
@@ -833,34 +783,8 @@
         }
 
         /* ========================================
-           ADMIN MINI BUTTON
+           PASSWORD MODAL
            ======================================== */
-        .admin-mini-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 100;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .admin-mini-btn:hover {
-            background: var(--primary);
-            color: #000;
-            transform: scale(1.1);
-        }
-
-        /* Password Modal */
         .password-modal {
             display: none;
             position: fixed;
@@ -1105,11 +1029,6 @@
             color: var(--text);
         }
 
-        .promo-text strong {
-            color: var(--success);
-            font-size: 18px;
-        }
-
         .murodov{
             font-size: 20px;
             color: rgb(255, 0, 0);
@@ -1139,13 +1058,6 @@
             font-weight: 800;
             color: yellow;
         }
-
-        /* ========================================
-           HEADER (OLD - HIDDEN)
-           ======================================== */
-        .header {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -1155,7 +1067,7 @@
             <div class="hero-content">
                 <div class="hero-badge">🔥 АКЦИЯ У KILLUA</div>
                 <h1 class="hero-title">💎 АЛМАЗЫ ДЛЯ FREE FIRE</h1>
-                <p class="hero-subtitle">Купи алмазы со скидкой до 10%!</p>
+                <p class="hero-subtitle">Купи алмазы по выгодным ценам!</p>
                 <div class="hero-stats">
                     <div class="hero-stat">
                         <span class="hero-stat-num">999+</span>
@@ -1189,7 +1101,7 @@
             <div class="promo-content">
                 <span class="promo-icon">🎁😍</span>
                 <div class="promo-text">
-                    <strong>БОНУС +80%</strong> к каждому пакету!
+                    <strong>БОНУСЫ КАЖДЫЙ ДЕНЬ!</strong>
                 </div>
             </div>
         </div>
@@ -1199,9 +1111,6 @@
             <div class="section-title">📋 Мои заявки</div>
             <div class="orders-list" id="orders-list"></div>
         </div>
-
-        <!-- Admin Button (Small) -->
-
     </div>
 
     <!-- Order Modal -->
@@ -1228,8 +1137,6 @@
                 <!-- Selected Package (Hidden) -->
                 <input type="hidden" id="selected-package-id">
 
-
-
                 <!-- Payment Info -->
                 <div class="payment-box">
                     <div class="payment-title">💳 Реквизиты для оплаты</div>
@@ -1241,7 +1148,7 @@
                              <button class="copy-btn" onclick="copyText('+992915447477')">📋 Копировать</button><br>
                         </div>
                     </div>
-                    <div class="payment-warning"><b class="icon">⚠️</b><b class="b"> Покупайте алмазы только у <b class="murodov">KILLUA</b><b class="v"> !</b></b></div>
+                    <div class="payment-warning"><b class="icon">⚠️</b><b class="b"> Покупайте алмазы только у <b class="murodov">MURODOV</b><b class="v"> !</b></b></div>
                 </div>
 
                 <!-- Screenshot Upload -->
@@ -1311,10 +1218,8 @@
         const CONFIG = {
             PAYMENT_NUMBER: '+992 915 44 74 77',
             STORAGE_KEY: 'diamond_shop_orders',
-            // === НАСТРОЙКИ ДЛЯ УВЕДОМЛЕНИЙ АДМИНА ===
-            TELEGRAM_BOT_TOKEN: '8757057836:AAEvqFccSd40ajOrryUyrJF5Ot5nVch6xOQ', // Токен бота @BotFather
-            ADMIN_CHAT_IDS: 8580108436, 8406121228 // ID админов через запятую
-            // ======================================
+            TELEGRAM_BOT_TOKEN: '8757057836:AAEvqFccSd40ajOrryUyrJF5Ot5nVch6xOQ',
+            ADMIN_CHAT_IDS: '8580108436'
         };
 
         // Telegram WebApp
@@ -1323,18 +1228,18 @@
         tg.expand();
 
         // ========================================
-        // PACKAGES DATA
+        // PACKAGES DATA (БЕЗ БОНУСОВ)
         // ========================================
         const PACKAGES = [
-            { id: 1, diamonds: 100, price: 10, cm: 'CM', name: '100', isHot: false, bonus: Math.round(105 * 0.8) },
-            { id: 2, diamonds: 300, price: 30, cm: 'CM', name: '310', isHot: false, bonus: Math.round(310 * 0.8) },
-            { id: 3, diamonds: 500, price: 50, cm: 'CM', name: '520', isHot: false, bonus: Math.round(520 * 0.8) },
-            { id: 4, diamonds: 1000, price: 100, cm: 'CM', name: '1060', isHot: true, bonus: Math.round(1060 * 0.8) },
-            { id: 5, diamonds: 2000, price: 200, cm: 'CM', name: '2180', isHot: true, bonus: Math.round(2180 * 0.8) },
-            { id: 6, diamonds: 5000, price: 500, cm: 'CM', name: '5600', isHot: true, bonus: Math.round(5600 * 0.8) },
-            { id: 7, diamonds: 800, price: 50, cm: 'CM', name: 'ПРОПУСК ПРОКАЧКА', isVoucher: false, bonus: Math.round(1000 * 0.8) },
-            { id: 8, diamonds: 450, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true, bonus: Math.round(450 * 0.8) },
-            { id: 9, diamonds: 2500, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true, bonus: Math.round(2500 * 0.8) }
+            { id: 1, diamonds: 105, price: 10, cm: 'CM', name: '100', isHot: false },
+            { id: 2, diamonds: 310, price: 30, cm: 'CM', name: '310', isHot: false },
+            { id: 3, diamonds: 520, price: 50, cm: 'CM', name: '520', isHot: false },
+            { id: 4, diamonds: 1060, price: 100, cm: 'CM', name: '1060', isHot: true },
+            { id: 5, diamonds: 2180, price: 200, cm: 'CM', name: '2180', isHot: true },
+            { id: 6, diamonds: 5600, price: 500, cm: 'CM', name: '5600', isHot: true },
+            { id: 7, diamonds: 1000, price: 50, cm: 'CM', name: 'ПРОПУСК ПРОКАЧКА' },
+            { id: 8, diamonds: 450, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ' },
+            { id: 9, diamonds: 2500, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ' }
         ];
 
         // ========================================
@@ -1352,7 +1257,6 @@
             renderPackages();
             renderOrders();
             updateAdminStats();
-            applyTheme();
             setupKeyboardShortcuts();
         }
 
@@ -1363,14 +1267,6 @@
 
         function saveOrders() {
             localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(orders));
-        }
-
-        function applyTheme() {
-            const params = tg.themeParams;
-            if (params) {
-                document.documentElement.style.setProperty('--bg-dark', params.bg_color || '#0a0a1a');
-                document.documentElement.style.setProperty('--text', params.text_color || '#ffffff');
-            }
         }
 
         // ========================================
@@ -1388,7 +1284,7 @@
         // ========================================
         // PASSWORD MODAL
         // ========================================
-        const ADMIN_PASSWORD = '2013142020'; // Пароль админа
+        const ADMIN_PASSWORD = '2013142020';
 
         function openAdminWithPassword() {
             document.getElementById('password-modal').classList.add('active');
@@ -1416,7 +1312,6 @@
             }
         }
 
-        // Enter key for password
         document.getElementById('admin-password')?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 checkAdminPassword();
@@ -1436,18 +1331,14 @@
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.onclick = () => openModal(pkg);
 
-                const bonusText = pkg.bonus > 0 ? `<div class="package-bonus">🎁 +${pkg.bonus} БОНУС (+80%)</div>` : '';
-                const badge = pkg.isVoucher ? '<div class="package-badge">🎫 ВАУЧЕР</div>' : '';
+                const badge = pkg.name.includes('ВАУЧЕР') ? '<div class="package-badge">🎫 ВАУЧЕР</div>' : '';
                 const hotBadge = pkg.isHot ? '<div class="package-hot-badge">🔥 ХИТ ПРОДАЖ</div>' : '';
-                
-                const totalGems = pkg.diamonds + (pkg.bonus || 0);
 
                 card.innerHTML = `
                     ${hotBadge}
                     ${badge}
                     <div class="package-icon">💎</div>
-                    <div class="package-diamonds">${totalGems.toLocaleString()} АЛМАЗОВ</div>
-                    ${bonusText}
+                    <div class="package-diamonds">${pkg.diamonds.toLocaleString()} АЛМАЗОВ</div>
                     <div class="package-price">
                         <span class="package-price-value">${pkg.price} CM</span>
                         <button class="buy-btn" onclick="event.stopPropagation(); openModal(PACKAGES[${index}])">КУПИТЬ</button>
@@ -1465,13 +1356,11 @@
             currentPackage = pkg;
             screenshotData = null;
 
-            // Reset form
             document.getElementById('order-form').reset();
             document.getElementById('selected-package-id').value = pkg.id;
             document.getElementById('file-upload').classList.remove('has-file');
             document.getElementById('file-preview').src = '';
 
-            // Show modal
             document.getElementById('modal-overlay').classList.add('active');
             tg.HapticFeedback.impactOccurred('light');
         }
@@ -1509,11 +1398,9 @@
             btn.classList.add('loading');
             btn.disabled = true;
 
-            // Get form data
             const playerId = document.getElementById('player-id').value.trim();
             const nickname = document.getElementById('player-nickname').value.trim();
 
-            // Validate
             if (!playerId || !nickname) {
                 showToast('Заполните все поля!');
                 btn.classList.remove('loading');
@@ -1530,13 +1417,11 @@
                 return;
             }
 
-            // Create order
             const order = {
                 id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
                 packageId: currentPackage.id,
                 packageName: currentPackage.name,
                 diamonds: currentPackage.diamonds,
-                bonus: currentPackage.bonus,
                 price: currentPackage.price,
                 playerId: playerId,
                 nickname: nickname,
@@ -1547,30 +1432,22 @@
                 username: tg.initDataUnsafe?.user?.first_name || 'User'
             };
 
-            // Save
             orders.unshift(order);
             saveOrders();
 
-            // Отправка уведомлений ВСЕМ админам
             notifyAdmins(order, false);
-
-            // Send to bot
             sendToBot(order);
 
-            // Close modal
             closeModal();
 
-            // Reset button
             btn.classList.remove('loading');
             btn.disabled = false;
 
-            // UI updates
             renderOrders();
             updateAdminStats();
             showToast('✅ Заявка отправлена!');
             tg.HapticFeedback.notificationOccurred('success');
 
-            // Confetti
             createConfetti();
         }
 
@@ -1578,13 +1455,10 @@
         // SEND TO BOT
         // ========================================
         function sendToBot(order, isResend = false) {
-            const typeLabel = isResend ? '📤 ПОВТОРНАЯ ЗАЯВКА' : '💎 ПОКУПКА АЛМАЗОВ';
-            const totalGems = order.diamonds + (order.bonus || 0);
-            
             const message = `
 ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 'ПОКУПКА АЛМАЗОВ'}*
 
-💎 *Алмазы:* ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💎 *Алмазы:* ${order.diamonds.toLocaleString()}
 💰 *Цена:* ${order.price} CM
 🎮 *ID:* \`${order.playerId}\`
 👤 *Ник:* ${order.nickname}
@@ -1599,35 +1473,26 @@ ${isResend ? '📤' : '💎'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
                     order: order,
                     message: message
                 }));
-                console.log('Order sent:', isResend ? 'resend' : 'new');
             } catch (e) {
                 console.log('Bot send error:', e);
-                // Continue anyway - order is saved locally
             }
         }
 
         // ========================================
-        // ОТПРАВКА УВЕДОМЛЕНИЙ ВСЕМ АДМИНАМ
+        // NOTIFY ADMINS
         // ========================================
         async function notifyAdmins(order, isResend = false) {
             const botToken = CONFIG.TELEGRAM_BOT_TOKEN;
             const adminIds = CONFIG.ADMIN_CHAT_IDS;
-            
-            // Проверка настройки
-            if (!botToken || botToken === 'YOUR_BOT_TOKEN_HERE' || 
-                !adminIds || adminIds === 'YOUR_CHAT_ID,YOUR_CHAT_ID2') {
-                console.log('Telegram уведомления не настроены. Настройте TELEGRAM_BOT_TOKEN и ADMIN_CHAT_IDS в CONFIG');
-                showToast('⚠️ Настройте бота в коде!');
+
+            if (!botToken || botToken === 'YOUR_BOT_TOKEN_HERE' || !adminIds) {
                 return;
             }
 
-            const totalGems = order.diamonds + (order.bonus || 0);
-            
-            // Текст сообщения
             const messageText = `
 ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '💎 НОВАЯ ЗАЯВКА'}*
 
-💎 *Алмазы:* ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💎 *Алмазы:* ${order.diamonds.toLocaleString()}
 💰 *Цена:* ${order.price} CM
 🎮 *ID:* \`${order.playerId}\`
 👤 *Ник:* ${order.nickname}
@@ -1636,20 +1501,14 @@ ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
 📱 *Номер:* ${CONFIG.PAYMENT_NUMBER}
 ⏰ *Время:* ${new Date(order.createdAt).toLocaleString('ru-RU')}
             `.trim();
-            
-            // Получаем список админов
+
             const adminList = adminIds.split(',').map(id => id.trim()).filter(id => id);
-            
-            // CORS прокси для веба
             const corsProxy = 'https://corsproxy.io/?';
-            
-            // Отправляем каждому админу
+
             for (const chatId of adminList) {
                 try {
-                    // Если есть скриншот - отправляем фото с caption
                     if (order.screenshot && order.screenshot.startsWith('data:image')) {
                         try {
-                            // Конвертируем base64 в blob
                             const base64Data = order.screenshot.split(',')[1];
                             const byteCharacters = atob(base64Data);
                             const byteNumbers = new Array(byteCharacters.length);
@@ -1658,12 +1517,11 @@ ${isResend ? '📤' : '🆕'} *${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : 
                             }
                             const byteArray = new Uint8Array(byteNumbers);
                             const blob = new Blob([byteArray], {type: 'image/jpeg'});
-                            
-                            // Формируем caption с данными заказа
+
                             const captionText = `
 ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '💎 НОВАЯ ЗАЯВКА'}
 
-💎 Алмазы: ${totalGems.toLocaleString()}${order.bonus > 0 ? ` (${order.diamonds} + ${order.bonus} БОНУС)` : ''}
+💎 Алмазы: ${order.diamonds.toLocaleString()}
 💰 Цена: ${order.price} CM
 🎮 ID: \`${order.playerId}\`
 👤 Ник: ${order.nickname}
@@ -1672,61 +1530,33 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
 📱 Номер: ${CONFIG.PAYMENT_NUMBER}
 ⏰ Время: ${new Date(order.createdAt).toLocaleString('ru-RU')}
                             `.trim();
-                            
-                            // Создаем FormData
+
                             const formData = new FormData();
                             formData.append('chat_id', chatId);
                             formData.append('photo', blob, 'receipt.jpg');
                             formData.append('caption', captionText);
-                            
-                            // Отправляем через CORS прокси
+
                             const photoUrl = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendPhoto`);
-                            
-                            const photoResponse = await fetch(photoUrl, {
-                                method: 'POST',
-                                body: formData
-                            });
-                            
-                            const photoResult = await photoResponse.json();
-                            if (photoResult.ok) {
-                                console.log('✅ Фото с данными отправлено!');
-                            } else {
-                                console.log('Фото не отправлено:', photoResult.description);
-                                // Отправляем только текст если фото не дошло
-                                await sendTextMessage(botToken, chatId, messageText, corsProxy);
-                            }
+                            await fetch(photoUrl, { method: 'POST', body: formData });
                         } catch (photoError) {
-                            console.log('Ошибка фото, отправляем текст:', photoError);
                             await sendTextMessage(botToken, chatId, messageText, corsProxy);
                         }
                     } else {
-                        // Нет скриншота - отправляем только текст
                         await sendTextMessage(botToken, chatId, messageText, corsProxy);
                     }
                 } catch (error) {
-                    console.error(`Ошибка:`, error);
+                    console.error('Notify error:', error);
                 }
             }
-            showToast('📨 Админы уведомлены!');
         }
 
-        // Функция отправки текстового сообщения
         async function sendTextMessage(botToken, chatId, text, corsProxy) {
             const url = corsProxy + encodeURIComponent(`https://api.telegram.org/bot${botToken}/sendMessage`);
-            const response = await fetch(url, {
+            await fetch(url, {
                 method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text,
-                    parse_mode: 'Markdown'
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'Markdown' })
             });
-            const result = await response.json();
-            return result;
         }
 
         // ========================================
@@ -1749,11 +1579,9 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 const statusText = order.status === 'pending' ? 'Ожидание' : 
                                    order.status === 'accepted' ? 'Принято' : 'Отменено';
 
-                const totalDiamonds = (order.diamonds || 0) + (order.bonus || 0);
-
                 card.innerHTML = `
                     <div class="order-header">
-                        <span class="order-diamonds">💎 ${totalDiamonds} алмазов</span>
+                        <span class="order-diamonds">💎 ${order.diamonds.toLocaleString()} алмазов</span>
                         <span class="order-status ${order.status}">${statusText}</span>
                     </div>
                     <div class="order-details">
@@ -1806,14 +1634,13 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 const item = document.createElement('div');
                 item.className = 'admin-order';
 
-                const totalDiamonds = (order.diamonds || 0) + (order.bonus || 0);
                 const statusText = order.status === 'pending' ? 'Ожидание' : 
                                    order.status === 'accepted' ? 'Принято' : 'Отменено';
 
                 item.innerHTML = `
                     <div class="admin-order-header">
                         <div>
-                            <div class="admin-order-id">💎 ${totalDiamonds} алмазов - ${order.price} CM</div>
+                            <div class="admin-order-id">💎 ${order.diamonds.toLocaleString()} алмазов - ${order.price} CM</div>
                             <span class="order-status ${order.status}">${statusText}</span>
                         </div>
                         ${order.status === 'pending' ? `
@@ -1867,28 +1694,6 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
         }
 
         // ========================================
-        // RESEND ORDER
-        // ========================================
-        function resendOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) {
-                showToast('❌ Заявка не найдена');
-                return;
-            }
-
-            try {
-                // Send to bot as resend
-                sendToBot(order, true);
-                showToast('📤 Заявка отправлена повторно!');
-                tg.HapticFeedback.notificationOccurred('success');
-            } catch (error) {
-                console.error('Resend error:', error);
-                showToast('❌ Ошибка отправки');
-                tg.HapticFeedback.impactOccurred('heavy');
-            }
-        }
-
-        // ========================================
         // UTILS
         // ========================================
         function showToast(message) {
@@ -1910,7 +1715,6 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 confetti.style.animationDelay = Math.random() * 0.5 + 's';
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                 document.body.appendChild(confetti);
-                
                 setTimeout(() => confetti.remove(), 3000);
             }
         }
@@ -1920,7 +1724,6 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
             if (e.target.id === 'modal-overlay') closeModal();
         });
 
-        // Close password modal on overlay click
         document.getElementById('password-modal')?.addEventListener('click', (e) => {
             if (e.target.id === 'password-modal') closePasswordModal();
         });
@@ -1930,4 +1733,3 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
     </script>
 </body>
 </html>
-
