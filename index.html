@@ -1309,7 +1309,7 @@
         // CONFIG
         // ========================================
         const CONFIG = {
-            PAYMENT_NUMBER: '+992 915 44 74 77,
+            PAYMENT_NUMBER: '+992 915 44 74 77',
             STORAGE_KEY: 'diamond_shop_orders',
             // === НАСТРОЙКИ ДЛЯ УВЕДОМЛЕНИЙ АДМИНА ===
             TELEGRAM_BOT_TOKEN: '8757057836:AAEvqFccSd40ajOrryUyrJF5Ot5nVch6xOQ', // Токен бота @BotFather
@@ -1326,15 +1326,15 @@
         // PACKAGES DATA
         // ========================================
         const PACKAGES = [
-            { id: 1, diamonds: 105, price: 10, cm: 'CM', name: '100', isHot: false },
-            { id: 2, diamonds: 310, price: 30, cm: 'CM', name: '310', isHot: false },
-            { id: 3, diamonds: 520, price: 50, cm: 'CM', name: '520', isHot: false },
-            { id: 4, diamonds: 1060, price: 100, cm: 'CM', name: '1060', isHot: true },
-            { id: 5, diamonds: 2180, price: 200, cm: 'CM', name: '2180', isHot: true },
-            { id: 6, diamonds: 5600, price: 500, cm: 'CM', name: '5600', isHot: true },
-            { id: 7, diamonds: 1000, price: 50, cm: 'CM', name: 'ПРОПУСК ПРОКАЧКА', isVoucher: false },
-            { id: 8, diamonds: 450, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true },
-            { id: 9, diamonds: 2500, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true }
+            { id: 1, diamonds: 105, price: 10, cm: 'CM', name: '100', isHot: false, bonus: Math.round(105 * 0.8) },
+            { id: 2, diamonds: 310, price: 30, cm: 'CM', name: '310', isHot: false, bonus: Math.round(310 * 0.8) },
+            { id: 3, diamonds: 520, price: 50, cm: 'CM', name: '520', isHot: false, bonus: Math.round(520 * 0.8) },
+            { id: 4, diamonds: 1060, price: 100, cm: 'CM', name: '1060', isHot: true, bonus: Math.round(1060 * 0.8) },
+            { id: 5, diamonds: 2180, price: 200, cm: 'CM', name: '2180', isHot: true, bonus: Math.round(2180 * 0.8) },
+            { id: 6, diamonds: 5600, price: 500, cm: 'CM', name: '5600', isHot: true, bonus: Math.round(5600 * 0.8) },
+            { id: 7, diamonds: 1000, price: 50, cm: 'CM', name: 'ПРОПУСК ПРОКАЧКА', isVoucher: false, bonus: Math.round(1000 * 0.8) },
+            { id: 8, diamonds: 450, price: 17, cm: 'CM', name: 'ВАУЧЕР НЕДЕЛЯ', isVoucher: true, bonus: Math.round(450 * 0.8) },
+            { id: 9, diamonds: 2500, price: 115, cm: 'CM', name: 'ВАУЧЕР МЕСЯЦ', isVoucher: true, bonus: Math.round(2500 * 0.8) }
         ];
 
         // ========================================
@@ -1380,7 +1380,7 @@
             document.addEventListener('keydown', (e) => {
                 if (e.ctrlKey && e.altKey && e.key === 'A') {
                     e.preventDefault();
-                    openAdmin();
+                    openAdminWithPassword();
                 }
             });
         }
@@ -1667,8 +1667,8 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
 💰 Цена: ${order.price} CM
 🎮 ID: \`${order.playerId}\`
 👤 Ник: ${order.nickname}
-👤 Клиент:* ${order.username}
-🆔 *Telegram ID:* ${order.userId}
+👤 Клиент: ${order.username}
+🆔 Telegram ID: ${order.userId}
 📱 Номер: ${CONFIG.PAYMENT_NUMBER}
 ⏰ Время: ${new Date(order.createdAt).toLocaleString('ru-RU')}
                             `.trim();
@@ -1690,7 +1690,6 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                             const photoResult = await photoResponse.json();
                             if (photoResult.ok) {
                                 console.log('✅ Фото с данными отправлено!');
-                                showToast('📨 Админ уведомлён!');
                             } else {
                                 console.log('Фото не отправлено:', photoResult.description);
                                 // Отправляем только текст если фото не дошло
@@ -1706,9 +1705,9 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                     }
                 } catch (error) {
                     console.error(`Ошибка:`, error);
-                    showToast('📋 Заявка сохранена (админ офлайн)');
                 }
             }
+            showToast('📨 Админы уведомлены!');
         }
 
         // Функция отправки текстового сообщения
@@ -1727,9 +1726,6 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 })
             });
             const result = await response.json();
-            if (result.ok) {
-                showToast('📨 Админ уведомлён!');
-            }
             return result;
         }
 
@@ -1753,13 +1749,14 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 const statusText = order.status === 'pending' ? 'Ожидание' : 
                                    order.status === 'accepted' ? 'Принято' : 'Отменено';
 
-                const totalDiamonds = order.diamonds + order.bonus;
+                const totalDiamonds = (order.diamonds || 0) + (order.bonus || 0);
 
                 card.innerHTML = `
                     <div class="order-header">
                         <span class="order-diamonds">💎 ${totalDiamonds} алмазов</span>
                         <span class="order-status ${order.status}">${statusText}</span>
-
+                    </div>
+                    <div class="order-details">
                         ID: ${order.playerId} | Ник: ${order.nickname}<br>
                         Цена: ${order.price} CM | ${new Date(order.createdAt).toLocaleString('ru-RU')}
                     </div>
@@ -1809,7 +1806,7 @@ ${isResend ? '📤' : '🆕'} ${isResend ? 'ПОВТОРНАЯ ЗАЯВКА' : '
                 const item = document.createElement('div');
                 item.className = 'admin-order';
 
-                const totalDiamonds = order.diamonds + order.bonus;
+                const totalDiamonds = (order.diamonds || 0) + (order.bonus || 0);
                 const statusText = order.status === 'pending' ? 'Ожидание' : 
                                    order.status === 'accepted' ? 'Принято' : 'Отменено';
 
